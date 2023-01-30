@@ -1,0 +1,85 @@
+replicaCount: 1
+
+image:
+  repository: '{{docker_registry_domain}}/{{organization}}/{{chart_name}}'
+  pullPolicy: IfNotPresent
+
+imagePullSecretCredentials: ""
+
+healthCheck:
+  enabled: true
+  path: /health
+  port: 6000
+
+http:
+  enabled: true
+  port: 6001
+app: {}
+imagePullSecrets: []
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 6000
+
+resources: {}
+
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+sentry:
+  enabled: false
+  debug: false
+  environment: local
+  sampleRate: 1.0
+  tracesSampleRate: 1.0
+  dsn: ''
+  clientOptions: {}
+  additionalTags: []
+prometheus:
+  enabled: false
+  path: "/metrics"
+  port: 9090
+  latencyHistogramsEnabled: true
+  serviceMonitor:
+    interval: 15s
+    scrapeTimeout: 10s
+    relabelings: []
+serviceMonitor:
+  enabled: false
+  namespaceSelector: {}
+  annotations: {}
+  labels: {}
+  interval: null
+  scrapeTimeout: null
+  relabelings: []

@@ -1,0 +1,15 @@
+name: Upload Released Chart
+on:
+  release:
+    types:
+      - published
+jobs:
+  upload-chart-git:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump Context
+        uses: crazy-max/ghaction-dump-context@v1
+      - name: Push Chart
+        uses: catalystsquad/action-upload-chart-git@v1
+        with:
+          token: ${{ secrets.AUTOMATION_PAT }}

@@ -1,0 +1,18 @@
+name: Auto approve
+on:
+  pull_request:
+    branches:
+      - alpha
+jobs:
+  auto-approve:
+    name: Approve automated code releases
+    if: ${{ startsWith( github.head_ref, 'automated-code-release' ) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: crazy-max/ghaction-dump-context@v1
+      - uses: hmarr/auto-approve-action@v2
+        with:
+          # use of github.token here is important. We use an automation user to create the PRs so that workflows will get
+          # triggered. Automerge requires all checks to pass (branch protections), and the automation user cannot approve
+          # its own PR. Using github.token approves the PR as github-actions, allowing the PR to be merged.
+          github-token: "${{ github.token }}"

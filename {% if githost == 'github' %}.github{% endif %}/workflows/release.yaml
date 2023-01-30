@@ -1,0 +1,18 @@
+name: Release
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - 'chart/**'
+jobs:
+  release:
+    name: Release chart
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: catalystsquad/action-release-helm-chart@v1
+        with:
+          token: ${{ secrets.AUTOMATION_PAT }}

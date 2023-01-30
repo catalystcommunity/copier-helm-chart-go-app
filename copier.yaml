@@ -1,0 +1,47 @@
+#config
+
+_exclude: 
+  - "copier.yaml"
+  - "copier.yml"
+  - "~*"
+  - "*.py[co]"
+  - "__pycache__"
+  - ".git"
+  - ".DS_Store"
+  - ".svn"
+  - ".github"
+
+#questions
+
+organization:
+  type: str
+  help: What is your organization name?
+  default: unsetorg
+
+githost:
+  type: str
+  help: What git hosting service are you using?
+  default: github
+  choices:
+    - github
+    - other
+
+owner_groupname:
+  type: str
+  help: What is the groupname for the owners of this repo (engineers is the default for Catalyst Platform tooling)?
+  default: engineers
+
+github_settings:
+  type: bool
+  help: Would you like a github settings yaml file? This is ignored if you are not using github.
+  default: true
+
+chart_name:
+  type: string
+  help: What is the name of the chart?
+  default: unsetchart
+
+docker_registry_domain:
+  type: string
+  help: What is the domain for your docker image registry, excluding orga and repo name?
+  default: quay.io
