@@ -1,13 +1,14 @@
+{% raw %}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "template-go-cobra-app.fullname" . }}
+  name: {{ include "catalyst-go-app.fullname" . }}
   labels:
-    {{- include "template-go-cobra-app.labels" . | nindent 4 }}
+    {{- include "catalyst-go-app.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      {{- include "template-go-cobra-app.selectorLabels" . | nindent 6 }}
+      {{- include "catalyst-go-app.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -15,13 +16,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "template-go-cobra-app.selectorLabels" . | nindent 8 }}
+        {{- include "catalyst-go-app.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "template-go-cobra-app.serviceAccountName" . }}
+      serviceAccountName: {{ include "catalyst-go-app.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -67,6 +68,26 @@ spec:
               value: {{ .Values.prometheus.port | quote }}
             - name: PROMETHEUS_LATENCY_HISTOGRAMS_ENABLED
               value: {{ .Values.prometheus.latencyHistogramsEnabled | quote }}
+{% endraw %}
+            {% if db_choice == 'Postgres' %}
+            - name: POSTGRESDB_URI
+              valueFrom:
+                secretKeyRef:
+{% raw %}
+                  name: {{ include "catalyst-go-app.secretName" . }}
+{% endraw %}
+                  key: POSTGRESDB_URI
+            {% endif %}
+            {% if db_choice == 'Cockroach' %}
+            - name: COCKROACHDB_URI
+              valueFrom:
+                secretKeyRef:
+{% raw %}
+                  name: {{ include "catalyst-go-app.secretName" . }}
+{% endraw %}
+                  key: COCKROACHDB_URI
+            {% endif %}
+{% raw %}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -98,3 +119,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{% endraw %}
