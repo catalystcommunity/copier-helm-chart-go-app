@@ -45,3 +45,12 @@ docker_registry_domain:
   type: string
   help: What is the domain for your docker image registry, excluding orga and repo name?
   default: quay.io
+
+db_choice:
+  type: string
+  help: What kind of Database would you like referenced (this is URL information, it does not create a db)?
+  default: Cockroach
+  choices:
+    - Cockroach
+    - Postgres
+    - None
