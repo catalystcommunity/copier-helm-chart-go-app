@@ -37,12 +37,12 @@ github_settings:
   default: true
 
 chart_name:
-  type: string
+  type: str
   help: What is the name of the chart?
   default: unsetchart
 
 docker_registry_domain:
-  type: string
+  type: str
   help: What is the domain for your docker image registry, excluding orga and repo name?
   default: quay.io
 
