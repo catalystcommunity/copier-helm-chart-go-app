@@ -47,7 +47,7 @@ docker_registry_domain:
   default: quay.io
 
 db_choice:
-  type: string
+  type: str
   help: What kind of Database would you like referenced (this is URL information, it does not create a db)?
   default: Cockroach
   choices:
