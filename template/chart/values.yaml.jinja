@@ -1,9 +1,9 @@
 # Don't change the name without changing affinity and such
-nameOverride: {{chart_name}}
+nameOverride: {{app_name}}
 replicaCount: 1
 
 image:
-  repository: '{{docker_registry_domain}}/{{organization}}/{{chart_name}}'
+  repository: '{{docker_registry_domain}}/{{organization}}/{{app_name}}'
   pullPolicy: IfNotPresent
 
 imagePullSecretCredentials: ""
@@ -69,7 +69,7 @@ affinity:
           - key: app.kubernetes.io/name
             operator: In
             values:
-            - {{ chart_name }}
+            - {{app_name}}
         topologyKey: kubernetes.io/hostname
 sentry:
   enabled: false

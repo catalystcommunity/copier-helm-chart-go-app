@@ -1,15 +1,6 @@
 #config
 
-_exclude: 
-  - "copier.yaml"
-  - "copier.yml"
-  - "~*"
-  - "*.py[co]"
-  - "__pycache__"
-  - ".git"
-  - ".DS_Store"
-  - ".svn"
-  - ".github"
+_subdirectory: template
 
 #questions
 
@@ -36,9 +27,9 @@ github_settings:
   help: Would you like a github settings yaml file? This is ignored if you are not using github.
   default: true
 
-chart_name:
+app_name:
   type: str
-  help: What is the name of the chart?
+  help: What is the name of the application?
   default: unsetchart
 
 docker_registry_domain:
